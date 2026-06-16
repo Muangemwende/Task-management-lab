@@ -1,45 +1,48 @@
 """
-main.py - Entry point for the Task Management System.
+main.py - Main script for the Task Management System.
+Provides a menu-based interface for managing tasks.
 """
 
 from task_manager.task_utils import (
     add_task,
     mark_task_complete,
     view_pending_tasks,
-    calculate_progress,
     track_progress,
+    calculate_progress
 )
-
-tasks = []
 
 
 def display_menu():
-    print("\n--- Task Manager ---")
-    print("1. Add task")
-    print("2. Mark task as complete")
-    print("3. View pending tasks")
-    print("4. Track progress")
+    """Display the main menu options."""
+    print("\n===== Task Management System =====")
+    print("1. Add Task")
+    print("2. Mark Task as Complete")
+    print("3. View Pending Tasks")
+    print("4. Track Progress")
     print("5. Exit")
-    print("--------------------")
+    print("==================================")
 
 
 def main():
+    """Main function to run the task management system."""
+    tasks = []
+
     while True:
         display_menu()
-        choice = input("Enter your choice: ").strip()
+        choice = input("Enter your choice (1-5): ").strip()
 
         if choice == "1":
-            title = input("Enter task title: ").strip()
+            title = input("Enter task name: ").strip()
             description = input("Enter task description: ").strip()
             due_date = input("Enter due date (YYYY-MM-DD): ").strip()
-            add_task(tasks, title, description, due_date)
+            tasks = add_task(tasks, title, description, due_date)
 
         elif choice == "2":
             view_pending_tasks(tasks)
-            if tasks:
+            if len(tasks) > 0:
                 try:
-                    task_number = int(input("Enter task number to mark as complete: ").strip())
-                    mark_task_complete(tasks, task_number - 1)
+                    task_num = int(input("Enter task number to mark as complete: ").strip())
+                    tasks = mark_task_complete(tasks, task_num - 1)
                 except ValueError:
                     print("Error: Please enter a valid number.")
 
@@ -50,7 +53,7 @@ def main():
             track_progress(tasks)
 
         elif choice == "5":
-            print("Goodbye!")
+            print("Goodbye! Stay productive!")
             break
 
         else:
